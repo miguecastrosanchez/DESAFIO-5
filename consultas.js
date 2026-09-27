@@ -35,4 +35,30 @@ const obtenerJoyas = async ({
   return rows;
 };
 
-module.exports = { obtenerJoyas };
+//HATEOAS (Hypermedia as the Engine of Application State) es un principio de diseño de API REST que permite a los clientes interactuar con la API a través de enlaces proporcionados en las respuestas. En este caso, la función prepararHATEOAS toma un arreglo de joyas y devuelve un objeto que incluye información sobre el total de joyas, el stock total y un arreglo de resultados con enlaces a cada joya individual.
+const prepararHATEOAS = (joyas) => {
+
+  const results = joyas.map((joya) => {
+    return {
+      name: joya.nombre,
+      href: `/joyas/joya/${joya.id}`,
+    };
+  });
+
+  const totalJoyas = joyas.length;
+
+  const stockTotal = joyas.reduce(
+    (total, joya) => total + joya.stock,
+    0
+  );
+
+  const HATEOAS = {
+    totalJoyas,
+    stockTotal,
+    results,
+  };
+
+  return HATEOAS;
+};
+
+module.exports = { obtenerJoyas, prepararHATEOAS };

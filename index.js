@@ -1,5 +1,6 @@
 const express = require("express");
-const { obtenerJoyas } = require("./consultas");
+
+const {obtenerJoyas, prepararHATEOAS,} = require("./consultas");
 
 const app = express();
 
@@ -7,13 +8,19 @@ app.use(express.json());
 
 app.get("/joyas", async (req, res) => {
   try {
+
     const joyas = await obtenerJoyas(req.query);
 
-    res.json(joyas);
+    const HATEOAS = prepararHATEOAS(joyas);
+
+    res.json(HATEOAS);
+
   } catch (error) {
+
     res.status(500).json({
       error: error.message,
     });
+
   }
 });
 
