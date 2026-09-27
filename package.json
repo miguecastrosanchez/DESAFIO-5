@@ -1,0 +1,25 @@
+{
+  "name": "desafio-5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguecastrosanchez/DESAFIO-5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miguecastrosanchez/DESAFIO-5/issues"
+  },
+  "homepage": "https://github.com/miguecastrosanchez/DESAFIO-5#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.23.0",
+    "pg-format": "^1.0.4"
+  }
+}
