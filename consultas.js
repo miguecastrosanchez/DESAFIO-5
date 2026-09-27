@@ -61,4 +61,53 @@ const prepararHATEOAS = (joyas) => {
   return HATEOAS;
 };
 
-module.exports = { obtenerJoyas, prepararHATEOAS };
+//FILTROS 
+const obtenerJoyasPorFiltros = async ({
+  precio_min,
+  precio_max,
+  categoria,
+  metal,
+}) => {
+
+  let filtros = [];
+  const values = [];
+
+  const agregarFiltro = (campo, comparador, valor) => {
+
+    values.push(valor);
+
+    const posicion = values.length;
+
+    filtros.push(`${campo} ${comparador} $${posicion}`);
+  };
+
+  if (precio_min) {
+    agregarFiltro("precio", ">=", precio_min);
+  }
+
+  if (precio_max) {
+    agregarFiltro("precio", "<=", precio_max);
+  }
+
+  if (categoria) {
+    agregarFiltro("categoria", "=", categoria);
+  }
+
+  if (metal) {
+    agregarFiltro("metal", "=", metal);
+  }
+
+  let consulta = "SELECT * FROM inventario";
+
+  if (filtros.length > 0) {
+
+    consulta += ` WHERE ${filtros.join(" AND ")}`;
+
+  }
+
+  const { rows } = await pool.query(consulta, values);
+
+  return rows;
+};
+
+module.exports = { obtenerJoyas, prepararHATEOAS, obtenerJoyasPorFiltros };
