@@ -6,6 +6,17 @@ const app = express();
 
 app.use(express.json());
 
+//middleware para manejar errores
+const reporte = (req, res, next) => {
+  console.log(
+    `[${new Date().toLocaleString()}] ${req.method} ${req.originalUrl}`
+  );
+
+  next();
+};
+
+app.use(reporte);
+
 app.get("/joyas", async (req, res) => {
   try {
 
